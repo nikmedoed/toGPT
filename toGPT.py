@@ -88,10 +88,28 @@ def read_files(paths):
 
     return "\n\n".join(result)
 
+def _read_file_with_fallback(file_path):
+    """Read file trying several encodings."""
+    encodings = ["utf-8", "utf-8-sig", "utf-16", "cp1251"]
+    for enc in encodings:
+        try:
+            with open(file_path, "r", encoding=enc) as f:
+                return f.read()
+        except UnicodeDecodeError:
+            continue
+        except Exception:
+            # Other errors (e.g., file not found) should propagate
+            raise
+
+    # As a last resort read as bytes and decode replacing errors
+    with open(file_path, "rb") as f:
+        data = f.read()
+    return data.decode("utf-8", errors="replace")
+
+
 def read_single_file(file_path, common_prefix):
     try:
-        with open(file_path, 'r', encoding='utf-8') as f:
-            content = f.read()
+        content = _read_file_with_fallback(file_path)
     except Exception as e:
         content = f"Ошибка чтения файла: {e}"
 
