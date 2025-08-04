@@ -36,7 +36,7 @@ function toGPT {
 
 Save and restart your PowerShell session.
 
-### Setup bash / szh
+### Setup bash / zsh
 
 ```shell
 chmod +x toGPT.py 
