@@ -36,6 +36,13 @@ function toGPT {
 
 Save and restart your PowerShell session.
 
+### Setup bash / szh
+
+```shell
+chmod +x toGPT.py 
+sudo ln -sf /pathToScript/toGPT.py /usr/local/bin/toGPT
+```
+
 ## 🎯 Usage
 
 Basic command structure:
